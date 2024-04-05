@@ -1,0 +1,4 @@
+Flask
+requests
+Markdown2docx
+Flask-Cors
