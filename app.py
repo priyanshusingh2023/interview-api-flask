@@ -13,7 +13,7 @@ class ChatService:
         self.api_key = api_key
         self.base_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + self.api_key
 
-    def get_interview_questions(self, domain, role, difficulty_level, specific_topic, num_questions=10):
+    def get_interview_questions(self, domain, role, difficulty_level, specific_topic, num_questions=15):
         try:
             headers = {'Content-Type': 'application/json'}
 
@@ -93,7 +93,7 @@ def generate_questions():
     role = request_data.get('role')
     difficulty_level = request_data.get('difficulty_level')
     specific_topic = request_data.get('specific_topic')
-    num_questions = request_data.get('num_questions', 10)  # Default to 10 questions if not specified
+    num_questions = request_data.get('num_questions', 15)  # Default to 15 questions if not specified
 
     # Generate interview questions using ChatService
     api_key = "AIzaSyCYutjs2BzQThKnA2q1hDNbZro4Al7N0Dw"  # Replace 'YOUR_API_KEY' with your actual API key
