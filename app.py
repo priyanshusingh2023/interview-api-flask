@@ -3,6 +3,12 @@ import requests
 from flask_cors import CORS
 import json
 
+import logging
+
+# Configure the logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
+
 app = Flask(__name__)
 CORS(app)
 
@@ -16,7 +22,7 @@ class ChatService:
     def get_interview_questions(self, domain, role, difficulty_level, specific_topic, num_questions=15):
         try:
             headers = {'Content-Type': 'application/json'}
-
+            logging.info(f"Generate {num_questions} interview questions on {specific_topic} with level {difficulty_level}.")
             prompt = f"You are a {role} in the {domain} domain preparing interview questions."
 
             prompt += f"\n\nGenerate {num_questions} interview questions along with answers for the topic of {specific_topic} with difficulty level {difficulty_level}."
@@ -81,6 +87,7 @@ class ChatService:
             return generated_questions[:num_questions]  # Return only the first num_questions
 
         except Exception as e:
+            logging.error(f"Error in generating interview question: {str(e)}")
             print("Service Exception:", str(e))
             raise Exception("Error in getting response from Gemini API")
 
@@ -95,6 +102,7 @@ def generate_questions():
     specific_topic = request_data.get('specific_topic')
     num_questions = request_data.get('num_questions', 15)  # Default to 15 questions if not specified
 
+    logging.info(f"Called for generating questions")
     # Generate interview questions using ChatService
     api_key = "AIzaSyCYutjs2BzQThKnA2q1hDNbZro4Al7N0Dw"  # Replace 'YOUR_API_KEY' with your actual API key
     chat_service = ChatService(api_key)
